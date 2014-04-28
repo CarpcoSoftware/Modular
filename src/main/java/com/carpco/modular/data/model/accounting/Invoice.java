@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.joda.time.DateTime;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.ObjectStatus;
 import com.carpco.modular.data.model.ObjectType;
 import com.carpco.modular.data.model.administration.User;
@@ -20,7 +20,7 @@ import com.carpco.modular.data.model.administration.User;
  * @author Carlos Rodriguez
  *
  */
-public class Invoice extends AbstractTableModel {
+public class Invoice extends DefaultTableModel {
 	
 	/**
 	 * Company that receive or expedite the invoice

@@ -6,24 +6,63 @@ package com.carpco.modular.data.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import com.carpco.modular.data.model.location.CompanyAddress;
 
 /**
  * Company table model
  * 
  * It is intended to be an entry point to different kind of company: <br/> 
- * 1- Modular client company that use the software
+ * 1- Modular client company that use the software <br/>
  * 2- Clients and providers from modular client company.
  * 
  * @author Carlos Rodriguez
  *
  */
-public class AbstractCompanyModel extends AbstractTableModel {
+public abstract class AbstractCompanyModel extends DefaultTableModel {
 
 	/**
 	 * Company address set
 	 */
 	private Set<CompanyAddress> companyAddressSet;
+	
+	/**
+         * {@link AbstractCompanyModel} constructor without parameters
+         */
+        public AbstractCompanyModel() {
+            super();
+        }
+        
+        /**
+         * {@link AbstractCompanyModel} constructor with parameters code and name
+         * @param code Code that will be used for record
+         * @param name Name that will be used for record
+         */
+        public AbstractCompanyModel(String code, String name) {
+            super();
+            this.code = code;
+            this.name = name;
+        }
+        
+        /**
+         * {@link AbstractCompanyModel} constructor with all parameters
+         * @param identifier Identifier from database
+         * @param code Code from database
+         * @param name Name from database
+         * @param dtCreation Record's creation date and time
+         * @param dtLastUpdate Record's last update date and time
+         * @param enabled Flag to identify if record is enabled or disabled
+         */
+        public AbstractCompanyModel(int identifier, String code, String name, DateTime dtCreation, DateTime dtLastUpdate, boolean enabled) {
+            super();
+            this.identifier = identifier;
+            this.code = code;
+            this.name = name;
+            this.dtCreation = dtCreation;
+            this.dtLastUpdate = dtLastUpdate;
+            this.enabled = enabled;
+        }
 	
 	/**
 	 * @return the companyAddressSet

@@ -5,6 +5,8 @@ package com.carpco.modular.data.model.administration;
 
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import com.carpco.modular.data.model.AbstractCompanyModel;
 
 /**
@@ -33,10 +35,23 @@ public class Company extends AbstractCompanyModel {
 	 * @param dbConnection Modular company database connection
 	 */
 	public Company(String code, String name, String dbConnection) {
-		super();
-		this.code = code;
-		this.name = name;
+		super(code, name);
 		this.dbConnection = dbConnection;
+	}
+	
+	/**
+         * ModularCompany constructor with parameters
+         * @param identifier Identifier from database
+         * @param code Code from database
+         * @param name Name from database
+         * @param dtCreation Record's creation date and time
+         * @param dtLastUpdate Record's last update date and time
+         * @param enabled Flag to identify if record is enabled or disabled
+         * @param dbConnection Database string to be used in order to get connection with database
+         */
+	public Company(int identifier, String code, String name, DateTime dtCreation, DateTime dtLastUpdate, boolean enabled, String dbConnection) {
+	    super(identifier, code, name, dtCreation, dtLastUpdate, enabled);
+	    this.dbConnection = dbConnection;
 	}
 
 	/* (non-Javadoc)

@@ -3,14 +3,11 @@
  */
 package com.carpco.modular.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Set;
 
 import com.carpco.modular.dao.ICompanyDao;
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.dao.impl.mapper.CompanyMapper;
+import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Company;
 
 /**
@@ -22,55 +19,42 @@ import com.carpco.modular.data.model.administration.Company;
 public class ImplCompanyDAO extends AbstractImplDAO implements ICompanyDao {
 
 	@Override
-	public Set<AbstractTableModel> select() {
+	public Set<DefaultTableModel> select() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<AbstractTableModel> selectAllActive() {
+	public Set<DefaultTableModel> selectAllActive() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<AbstractTableModel> selectAllInactive() {
+	public Set<DefaultTableModel> selectAllInactive() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public AbstractTableModel selectByIdentifier(int identifier) {
-		String sql = "SELECT * FROM company WHERE identifier = ? AND enabled = 1 ";
+	public DefaultTableModel selectByIdentifier(int identifier) {
+	        StringBuilder sql = new StringBuilder();
+	        sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled, dbConnection ");
+	        sql.append("FROM company ");
+	        sql.append("WHERE identifier = ? AND enabled = 1 ");
 		 
-		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-			
-			ps.setInt(1, identifier);
-			Company company = null;
-			
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					company = new Company(
-						rs.getString("code"), 
-						rs.getString("name"),
-						rs.getString("dbConnection")
-					);
-				}
-			}
-			return company;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+		Company company = (Company) jdbcTemplateObject.queryForObject(sql.toString(), new Object[]{identifier}, new CompanyMapper());
+		return company;
 	}
 
 	@Override
-	public void insert(AbstractTableModel newRecord) {
+	public void insert(DefaultTableModel newRecord) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(AbstractTableModel record) {
+	public void update(DefaultTableModel record) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -11,7 +11,7 @@ import java.util.Set;
 
 import com.carpco.modular.dao.ICompanyDao;
 import com.carpco.modular.dao.IUserDao;
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Company;
 import com.carpco.modular.data.model.administration.User;
 
@@ -24,31 +24,31 @@ import com.carpco.modular.data.model.administration.User;
 public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
 
 	@Override
-	public Set<AbstractTableModel> select() {
+	public Set<DefaultTableModel> select() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<AbstractTableModel> selectAllActive() {
+	public Set<DefaultTableModel> selectAllActive() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<AbstractTableModel> selectAllInactive() {
+	public Set<DefaultTableModel> selectAllInactive() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void insert(AbstractTableModel newRecord) {
+	public void insert(DefaultTableModel newRecord) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
-	public void update(AbstractTableModel record) {
+	public void update(DefaultTableModel record) {
 		// TODO Auto-generated method stub
 		
 	}

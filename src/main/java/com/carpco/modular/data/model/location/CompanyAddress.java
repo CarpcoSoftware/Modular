@@ -1,6 +1,6 @@
 package com.carpco.modular.data.model.location;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * Company address is a model from database table.
@@ -10,7 +10,7 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class CompanyAddress extends AbstractTableModel {
+public class CompanyAddress extends DefaultTableModel {
 	
 	/**
 	 * Flag to identify if it is the default client address. 

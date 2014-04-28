@@ -5,7 +5,7 @@ package com.carpco.modular.dao;
 
 import java.util.Set;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * Abstract DAO interface
@@ -22,42 +22,42 @@ public interface IDao {
 	 * 
 	 * @return User set
 	 */
-	public Set<AbstractTableModel> select();
+	public Set<DefaultTableModel> select();
 	
 	/**
 	 * Selects all active records from database
 	 * 
 	 * @return User set
 	 */
-	public Set<AbstractTableModel> selectAllActive();
+	public Set<DefaultTableModel> selectAllActive();
 	
 	/**
 	 * Selects all inactive records from database
 	 * 
 	 * @return User set
 	 */
-	public Set<AbstractTableModel> selectAllInactive();
+	public Set<DefaultTableModel> selectAllInactive();
 	
 	/**
 	 * Select a record using identifier
 	 * 
 	 * @param identifier The identifier from database
-	 * @return {@link AbstractTableModel} if identifier is found in database, null otherwise
+	 * @return {@link DefaultTableModel} if identifier is found in database, null otherwise
 	 */
-	public AbstractTableModel selectByIdentifier(int identifier);
+	public DefaultTableModel selectByIdentifier(int identifier);
 	
 	/**
 	 * Insert a new record in database
 	 * 
-	 * @param newRecord {@link AbstractTableModel} to be inserted
+	 * @param newRecord {@link DefaultTableModel} to be inserted
 	 */
-	public void insert(AbstractTableModel newRecord);
+	public void insert(DefaultTableModel newRecord);
 	
 	/**
 	 * Update a record in database
 	 * 
-	 * @param record {@link AbstractTableModel} to be inserted
+	 * @param record {@link DefaultTableModel} to be inserted
 	 */
-	public void update(AbstractTableModel record);
+	public void update(DefaultTableModel record);
 
 }

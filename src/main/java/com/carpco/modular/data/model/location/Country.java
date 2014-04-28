@@ -3,7 +3,7 @@ package com.carpco.modular.data.model.location;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * Country is a model from database table.
@@ -11,25 +11,13 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class Country extends AbstractTableModel {
+public class Country extends DefaultTableModel {
 	
 	/**
 	 * Set of states(departments) that are in the country.
 	 */
 	private Set<State> stateSet;
 	
-	/**
-	 * Country constructor
-	 * 
-	 * @param code Country code
-	 * @param name Country name
-	 */
-	public Country(String code, String name) {
-		super();
-		this.code = code;
-		this.name = name;
-	}
-
 	/**
 	 * @return the stateSet
 	 */

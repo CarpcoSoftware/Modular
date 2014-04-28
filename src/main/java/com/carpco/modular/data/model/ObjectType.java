@@ -12,25 +12,13 @@ import java.util.Set;
  * @author Carlos Rodriguez
  *
  */
-public class ObjectType extends AbstractTableModel {
+public class ObjectType extends DefaultTableModel {
 	
 	/**
 	 * Object status set
 	 */
 	private Set<ObjectStatus> objectStatusSet;
 	
-	/**
-	 * Object type constructor
-	 * 
-	 * @param code Object type code
-	 * @param name Object type name
-	 */
-	public ObjectType(String code, String name) {
-		super();
-		this.code = code;
-		this.name = name;
-	}
-
 	/**
 	 * @return the objectStatusSet
 	 */

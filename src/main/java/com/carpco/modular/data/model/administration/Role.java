@@ -6,7 +6,7 @@ package com.carpco.modular.data.model.administration;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * Role is a model from database table.
@@ -16,24 +16,12 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class Role extends AbstractTableModel {
+public class Role extends DefaultTableModel {
 	
 	/**
 	 * Role access set linked to the role
 	 */
 	private Set<Access> accessSet;
-	
-	/**
-	 * Role constructor
-	 * 
-	 * @param code Role code
-	 * @param name Role name
-	 */
-	public Role(String code, String name) {
-		super();
-		this.code = code;
-		this.name = name;
-	}
 	
 	/**
 	 * @return the rolePermissionSet

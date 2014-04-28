@@ -3,7 +3,7 @@
  */
 package com.carpco.modular.data.model.administration;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * User is a model from database table.
@@ -13,7 +13,7 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class User extends AbstractTableModel {
+public class User extends DefaultTableModel {
 	
 	/**
 	 * User's login

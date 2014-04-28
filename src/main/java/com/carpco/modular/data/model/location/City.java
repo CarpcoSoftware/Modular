@@ -1,6 +1,6 @@
 package com.carpco.modular.data.model.location;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * City is a model from database table.
@@ -8,25 +8,13 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class City extends AbstractTableModel {
+public class City extends DefaultTableModel {
 	
 	/**
 	 * State that city is linked
 	 */
 	private State state;
 	
-	/**
-	 * City Constructor
-	 * 
-	 * @param code City code
-	 * @param name City name
-	 */
-	public City(String code, String name) {
-		super();
-		this.code = code;
-		this.name = name;
-	}
-
 	/**
 	 * @return the state
 	 */

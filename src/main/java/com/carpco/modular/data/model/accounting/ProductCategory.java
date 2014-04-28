@@ -3,7 +3,7 @@ package com.carpco.modular.data.model.accounting;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * Product category is a model from database table
@@ -11,7 +11,7 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class ProductCategory extends AbstractTableModel {
+public class ProductCategory extends DefaultTableModel {
 	
 	/**
 	 * Percent of tax that will be applied to products in this category

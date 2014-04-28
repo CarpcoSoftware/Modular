@@ -1,6 +1,6 @@
 package com.carpco.modular.data.model.administration;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * Access is a model from database table.
@@ -10,18 +10,15 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class Access extends AbstractTableModel {
-	
-	/**
-	 * Role access constructor 
-	 * 
-	 * @param code Role access code
-	 * @param name Role access name
-	 */
-	public Access(String code, String name) {
-		super();
-		this.code = code;
-		this.name = name;
-	}
+public class Access extends DefaultTableModel {
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Access [identifier=" + identifier + ", code=" + code + ", name=" + name + ", dtCreation=" + dtCreation + ", dtLastUpdate=" + dtLastUpdate
+                + ", enabled=" + enabled + "]";
+    }
 
 }

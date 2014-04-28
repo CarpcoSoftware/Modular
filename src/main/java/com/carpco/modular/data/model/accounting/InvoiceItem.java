@@ -3,7 +3,7 @@
  */
 package com.carpco.modular.data.model.accounting;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * Invoice item is a model from database table.
@@ -13,7 +13,7 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class InvoiceItem extends AbstractTableModel {
+public class InvoiceItem extends DefaultTableModel {
 	
 	/**
 	 * Product that was sold or bought

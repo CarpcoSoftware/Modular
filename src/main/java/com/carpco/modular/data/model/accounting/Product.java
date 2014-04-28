@@ -3,7 +3,7 @@
  */
 package com.carpco.modular.data.model.accounting;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.ObjectStatus;
 import com.carpco.modular.data.model.ObjectType;
 
@@ -14,7 +14,7 @@ import com.carpco.modular.data.model.ObjectType;
  * @author Carlos Rodriguez
  *
  */
-public class Product extends AbstractTableModel {
+public class Product extends DefaultTableModel {
 	
 	/**
 	 * Object type, (PROD)

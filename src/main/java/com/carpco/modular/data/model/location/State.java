@@ -3,7 +3,7 @@ package com.carpco.modular.data.model.location;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.carpco.modular.data.model.AbstractTableModel;
+import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
  * State is a model from database table.
@@ -11,7 +11,7 @@ import com.carpco.modular.data.model.AbstractTableModel;
  * @author Carlos Rodriguez
  *
  */
-public class State extends AbstractTableModel {
+public class State extends DefaultTableModel {
 	
 	/**
 	 * Set of cities that are in the state.
@@ -23,18 +23,6 @@ public class State extends AbstractTableModel {
 	 */
 	private Country country;
 	
-	/**
-	 * State constructor
-	 * 
-	 * @param code State code
-	 * @param name State name
-	 */
-	public State(String code, String name) {
-		super();
-		this.code = code;
-		this.name = name;
-	}
-
 	/**
 	 * @return the citySet
 	 */

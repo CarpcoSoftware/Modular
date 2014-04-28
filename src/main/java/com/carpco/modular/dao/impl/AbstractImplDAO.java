@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Abstract DAO implementation
@@ -27,6 +28,11 @@ public abstract class AbstractImplDAO {
 	 * Data source to allow access to database
 	 */
 	protected DataSource dataSource;
+	
+	/**
+	 * {@link JdbcTemplate} object used to execute statements
+	 */
+	protected JdbcTemplate jdbcTemplateObject;
 	 
 	/**
 	 * Sets a new data source
@@ -35,5 +41,6 @@ public abstract class AbstractImplDAO {
 	 */
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
+		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 }

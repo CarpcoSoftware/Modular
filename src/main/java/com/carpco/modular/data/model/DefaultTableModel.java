@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
  * @author Carlos Rodriguez
  *
  */
-public abstract class AbstractTableModel implements Comparable<AbstractTableModel> {
+public class DefaultTableModel implements Comparable<DefaultTableModel> {
 	
 	/**
 	 * Incremental identification from database.
@@ -127,8 +127,45 @@ public abstract class AbstractTableModel implements Comparable<AbstractTableMode
 	}
 	
 	@Override
-	public int compareTo(AbstractTableModel other) {
+	public int compareTo(DefaultTableModel other) {
 		return this.name.compareToIgnoreCase(other.getName());
+	}
+	
+	/**
+	 * {@link DefaultTableModel} constructor without parameters
+	 */
+	public DefaultTableModel() {
+	    super();
+	}
+	
+	/**
+	 * {@link DefaultTableModel} constructor with parameters code and name
+	 * @param code Code that will be used for record
+	 * @param name Name that will be used for record
+	 */
+	public DefaultTableModel(String code, String name) {
+	    super();
+	    this.code = code;
+	    this.name = name;
+	}
+	
+	/**
+	 * {@link DefaultTableModel} constructor with all parameters
+	 * @param identifier Identifier from database
+	 * @param code Code from database
+	 * @param name Name from database
+	 * @param dtCreation Record's creation date and time
+	 * @param dtLastUpdate Record's last update date and time
+	 * @param enabled Flag to identify if record is enabled or disabled
+	 */
+	public DefaultTableModel(int identifier, String code, String name, DateTime dtCreation, DateTime dtLastUpdate, boolean enabled) {
+	    super();
+	    this.identifier = identifier;
+	    this.code = code;
+	    this.name = name;
+	    this.dtCreation = dtCreation;
+	    this.dtLastUpdate = dtLastUpdate;
+	    this.enabled = enabled;
 	}
 	
 	/* (non-Javadoc)
@@ -158,9 +195,9 @@ public abstract class AbstractTableModel implements Comparable<AbstractTableMode
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof AbstractTableModel))
+		if (!(obj instanceof DefaultTableModel))
 			return false;
-		AbstractTableModel other = (AbstractTableModel) obj;
+		DefaultTableModel other = (DefaultTableModel) obj;
 		if (code == null) {
 			if (other.code != null)
 				return false;
@@ -193,7 +230,7 @@ public abstract class AbstractTableModel implements Comparable<AbstractTableMode
 	 */
 	@Override
 	public String toString() {
-		return "AbstractTableModel [identification=" + identifier
+		return "DefaultTableModel [identification=" + identifier
 				+ ", code=" + code + ", name=" + name + ", dtCreation="
 				+ dtCreation + ", dtLastUpdate=" + dtLastUpdate + ", enabled="
 				+ enabled + "]";

@@ -6,20 +6,8 @@ package com.carpco.modular.data.model;
  * @author Carlos Rodriguez
  *
  */
-public class ObjectStatus extends AbstractTableModel {
+public class ObjectStatus extends DefaultTableModel {
 	
-	/**
-	 * Object status constructor
-	 * 
-	 * @param code Object status code
-	 * @param name Object status name
-	 */
-	public ObjectStatus(String code, String name) {
-		super();
-		this.code = code;
-		this.name = name;
-	}
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
