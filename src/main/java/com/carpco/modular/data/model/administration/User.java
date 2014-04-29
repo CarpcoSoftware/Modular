@@ -3,6 +3,8 @@
  */
 package com.carpco.modular.data.model.administration;
 
+import org.joda.time.DateTime;
+
 import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
@@ -43,14 +45,16 @@ public class User extends DefaultTableModel {
 	 * @param login User login
 	 * @param password User password
 	 * @param company Company linked to user
+	 * @param role Role linked to user
 	 */
-	public User(String code, String name, String login, String password, Company company) {
+	public User(String code, String name, String login, String password, Company company, Role role) {
 		super();
 		this.code = code;
 		this.name = name;
 		this.login = login;
 		this.password = password;
 		this.company = company;
+		this.role = role;
 	}
 	
 	/**
@@ -59,14 +63,19 @@ public class User extends DefaultTableModel {
 	 * @param identifier User identifier from database
 	 * @param code User code
 	 * @param name User name
+	 * @param dtCreation User creation date
+	 * @param dtLastUpdate User last update date
 	 * @param login User login
 	 * @param password User password
 	 */
-	public User(int identifier, String code, String name, String login, String password) {
+	public User(int identifier, String code, String name, DateTime dtCreation, DateTime dtLastUpdate, boolean enabled, String login, String password) {
 		super();
 		this.identifier = identifier;
 		this.code = code;
 		this.name = name;
+		this.dtCreation = dtCreation;
+		this.dtLastUpdate = dtLastUpdate;
+		this.enabled = enabled;
 		this.login = login;
 		this.password = password;
 	}
