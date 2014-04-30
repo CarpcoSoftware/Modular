@@ -21,11 +21,11 @@ import com.carpco.modular.data.model.administration.User;
  * Unit test for simple App.
  */
 public class ImplUserDAOTest extends TestCase {
-  
+
   private final ApplicationContext context;
-  
+
   private final IUserDao userDAO;
-  
+
   /**
    * Create the test case
    * 
@@ -43,23 +43,23 @@ public class ImplUserDAOTest extends TestCase {
   public static Test suite() {
     return new TestSuite(ImplUserDAOTest.class);
   }
-  
-//  public void testInsert() {
-//    try {
-//      Company company = new Company(1, "", "", DateTime.now(), DateTime.now(), true, ""); 
-//      Role role = new Role(1, "SUPER", "Super user", DateTime.now(), DateTime.now(), true);
-//      User user = new User("CARP", "Prueba", "prueba", "prueba", company, role);
-//      userDAO.insert(user);
-//      assertTrue(true);
-//    } catch (UncategorizedSQLException ex) {
-//      System.out.println(ex);
-//      assertTrue(false);
-//    }
-//  }
-  
+
+  // public void testInsert() {
+  // try {
+  // Company company = new Company(1, "", "", DateTime.now(), DateTime.now(), true, "");
+  // Role role = new Role(1, "SUPER", "Super user", DateTime.now(), DateTime.now(), true);
+  // User user = new User("CARP", "Prueba", "prueba", "prueba", company, role);
+  // userDAO.insert(user);
+  // assertTrue(true);
+  // } catch (UncategorizedSQLException ex) {
+  // System.out.println(ex);
+  // assertTrue(false);
+  // }
+  // }
+
   public void testUpdate() {
     try {
-      Company company = new Company(1, "", "", DateTime.now(), DateTime.now(), true, ""); 
+      Company company = new Company(1, "", "", DateTime.now(), DateTime.now(), true, "");
       Role role = new Role(1, "SUPER", "Super user", DateTime.now(), DateTime.now(), true);
       User user = new User("CARP", "Prueba", "prueba", "prueba", company, role);
       user.setIdentifier(2);
@@ -77,28 +77,40 @@ public class ImplUserDAOTest extends TestCase {
     System.out.println(userSet.toString());
     assertTrue(userSet != null);
   }
-  
+
   public void testSelectAllActive() {
     Set<DefaultTableModel> userSet = userDAO.selectAllActive();
     System.out.println(userSet.toString());
     assertTrue(userSet != null);
   }
-  
+
   public void testSelectAllInactive() {
     Set<DefaultTableModel> userSet = userDAO.selectAllInactive();
     System.out.println(userSet.toString());
     assertTrue(userSet != null);
   }
-  
+
   public void testSelectByIdentifier() {
     User user = (User) userDAO.selectByIdentifier(1);
     System.out.println(user.toString());
     assertTrue(user != null);
   }
-  
+
   public void testSelectByLoginPassword() {
-    User user = userDAO.selectByLoginPassword("cpatino", "Modular020486");
+    DefaultTableModel user = userDAO.selectByLoginPassword("cpatino", "Modular020486");
     System.out.println(user.toString());
     assertTrue(user != null);
+  }
+
+  public void testSelectByCompany() {
+    Set<DefaultTableModel> userSet = userDAO.selectByCompany(1);
+    System.out.println(userSet.toString());
+    assertTrue(userSet != null);
+  }
+
+  public void testSelectByRole() {
+    Set<DefaultTableModel> userSet = userDAO.selectByRole(1);
+    System.out.println(userSet.toString());
+    assertTrue(userSet != null);
   }
 }

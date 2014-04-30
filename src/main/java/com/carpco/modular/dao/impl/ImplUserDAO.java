@@ -30,8 +30,8 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled, login, password, idCompany ");
     sql.append("FROM user ");
 
-    List<User> user = jdbcTemplateObject.query(sql.toString(), new UserMapper());
-    return new HashSet<DefaultTableModel>(user);
+    List<User> userList = jdbcTemplateObject.query(sql.toString(), new UserMapper());
+    return new HashSet<DefaultTableModel>(userList);
   }
 
   @SuppressWarnings("unchecked")
@@ -42,8 +42,8 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
     sql.append("FROM user ");
     sql.append("WHERE enabled = 1 ");
 
-    List<User> user = jdbcTemplateObject.query(sql.toString(), new UserMapper());
-    return new HashSet<DefaultTableModel>(user);
+    List<User> userList = jdbcTemplateObject.query(sql.toString(), new UserMapper());
+    return new HashSet<DefaultTableModel>(userList);
   }
 
   @SuppressWarnings("unchecked")
@@ -54,8 +54,8 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
     sql.append("FROM user ");
     sql.append("WHERE enabled = 0 ");
 
-    List<User> user = jdbcTemplateObject.query(sql.toString(), new UserMapper());
-    return new HashSet<DefaultTableModel>(user);
+    List<User> userList = jdbcTemplateObject.query(sql.toString(), new UserMapper());
+    return new HashSet<DefaultTableModel>(userList);
   }
 
   @Override
@@ -86,8 +86,6 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
                 new Timestamp(DateTime.now().getMillis()), user.isEnabled(), user.getLogin(),
                 user.getPassword(), user.getCompany().getIdentifier(),
                 user.getRole().getIdentifier(), user.getIdentifier()});
-    return;
-
   }
 
   @Override
@@ -114,5 +112,29 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
         (User) jdbcTemplateObject.queryForObject(sql.toString(), new Object[] {identifier},
             new UserMapper());
     return user;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public Set<DefaultTableModel> selectByCompany(int idCompany) {
+    StringBuilder sql = new StringBuilder();
+    sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled, login, password, idCompany ");
+    sql.append("FROM user ");
+    sql.append("WHERE idCompany = ? AND enabled = 1 ");
+
+    List<User> userList = jdbcTemplateObject.query(sql.toString(), new Object[] {idCompany}, new UserMapper());
+    return new HashSet<DefaultTableModel>(userList);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public Set<DefaultTableModel> selectByRole(int idRole) {
+    StringBuilder sql = new StringBuilder();
+    sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled, login, password, idCompany ");
+    sql.append("FROM user ");
+    sql.append("WHERE idRole = ? AND enabled = 1 ");
+
+    List<User> userList = jdbcTemplateObject.query(sql.toString(), new Object[] {idRole}, new UserMapper());
+    return new HashSet<DefaultTableModel>(userList);
   }
 }

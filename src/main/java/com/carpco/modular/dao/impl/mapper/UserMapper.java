@@ -49,7 +49,7 @@ public class UserMapper implements RowMapper {
         new User(identifier, code, name, dtCreation, dtLastUpdate, enabled, login, password);
     ICompanyDao companyDAO = (ICompanyDao) CONTEXT.getBean("companyDAO");
     user.setCompany((Company) companyDAO.selectByIdentifier(idCompany));
-    
+
     return user;
   }
 

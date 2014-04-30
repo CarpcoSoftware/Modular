@@ -6,38 +6,39 @@ import com.carpco.modular.data.model.DefaultTableModel;
  * City is a model from database table.
  * 
  * @author Carlos Rodriguez
- *
+ * 
  */
 public class City extends DefaultTableModel {
-	
-	/**
-	 * State that city is linked
-	 */
-	private State state;
-	
-	/**
-	 * @return the state
-	 */
-	public State getState() {
-		return state;
-	}
 
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(State state) {
-		this.state = state;
-	}
+  /**
+   * State that city is linked
+   */
+  private State state;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "City [identification=" + identifier + ", code=" + code
-				+ ", name=" + name + ", dtCreation=" + dtCreation
-				+ ", dtLastUpdate=" + dtLastUpdate + ", enabled=" + enabled
-				+ "]";
-	}
+  /**
+   * @return the state
+   */
+  public State getState() {
+    return state;
+  }
+
+  /**
+   * @param state the state to set
+   */
+  public void setState(State state) {
+    this.state = state;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "City [identification=" + identifier + ", code=" + code + ", name=" + name
+        + ", dtCreation=" + dtCreation + ", dtLastUpdate=" + dtLastUpdate + ", enabled=" + enabled
+        + "]";
+  }
 
 }

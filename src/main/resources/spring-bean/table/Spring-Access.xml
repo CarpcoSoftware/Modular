@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
  
-	<import resource="database/Spring-Datasource.xml" />
-	<import resource="table/Spring-User.xml" />
-	<import resource="table/Spring-Company.xml" />
-	<import resource="table/Spring-Access.xml" /> 
+	<bean id="accessDAO" class="com.carpco.modular.dao.impl.ImplAccessDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+ 
 </beans>

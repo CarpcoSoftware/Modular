@@ -9,100 +9,105 @@ import com.carpco.modular.data.model.DefaultTableModel;
  * State is a model from database table.
  * 
  * @author Carlos Rodriguez
- *
+ * 
  */
 public class State extends DefaultTableModel {
-	
-	/**
-	 * Set of cities that are in the state.
-	 */
-	private Set<City> citySet;
-	
-	/**
-	 * Country that state is linked
-	 */
-	private Country country;
-	
-	/**
-	 * @return the citySet
-	 */
-	public Set<City> getCitySet() {
-		return citySet;
-	}
 
-	/**
-	 * @param citySet the citySet to set
-	 */
-	public void setCitySet(Set<City> citySet) {
-		this.citySet = citySet;
-	}
-	
-	/**
-	 * Add a new city to the set
-	 * 
-	 * @param city New city to be added
-	 */
-	public void addCity(City city) {
-		if (this.citySet == null) {
-			this.citySet = new HashSet<>();
-		}
-		this.citySet.add(city);
-	}
+  /**
+   * Set of cities that are in the state.
+   */
+  private Set<City> citySet;
 
-	/**
-	 * @return the country
-	 */
-	public Country getCountry() {
-		return country;
-	}
+  /**
+   * Country that state is linked
+   */
+  private Country country;
 
-	/**
-	 * @param country the country to set
-	 */
-	public void setCountry(Country country) {
-		this.country = country;
-	}
+  /**
+   * @return the citySet
+   */
+  public Set<City> getCitySet() {
+    return citySet;
+  }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "State [citySet=" + citySet + ", identification="
-				+ identifier + ", code=" + code + ", name=" + name
-				+ ", dtCreation=" + dtCreation + ", dtLastUpdate="
-				+ dtLastUpdate + ", enabled=" + enabled + "]";
-	}
+  /**
+   * @param citySet the citySet to set
+   */
+  public void setCitySet(Set<City> citySet) {
+    this.citySet = citySet;
+  }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((citySet == null) ? 0 : citySet.hashCode());
-		return result;
-	}
+  /**
+   * Add a new city to the set
+   * 
+   * @param city New city to be added
+   */
+  public void addCity(City city) {
+    if (this.citySet == null) {
+      this.citySet = new HashSet<>();
+    }
+    this.citySet.add(city);
+  }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (!(obj instanceof State))
-			return false;
-		State other = (State) obj;
-		if (citySet == null) {
-			if (other.citySet != null)
-				return false;
-		} else if (!citySet.equals(other.citySet))
-			return false;
-		return true;
-	}
-	
+  /**
+   * @return the country
+   */
+  public Country getCountry() {
+    return country;
+  }
+
+  /**
+   * @param country the country to set
+   */
+  public void setCountry(Country country) {
+    this.country = country;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "State [citySet=" + citySet + ", identification=" + identifier + ", code=" + code
+        + ", name=" + name + ", dtCreation=" + dtCreation + ", dtLastUpdate=" + dtLastUpdate
+        + ", enabled=" + enabled + "]";
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + ((citySet == null) ? 0 : citySet.hashCode());
+    return result;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (!super.equals(obj))
+      return false;
+    if (!(obj instanceof State))
+      return false;
+    State other = (State) obj;
+    if (citySet == null) {
+      if (other.citySet != null)
+        return false;
+    } else if (!citySet.equals(other.citySet))
+      return false;
+    return true;
+  }
+
 }
