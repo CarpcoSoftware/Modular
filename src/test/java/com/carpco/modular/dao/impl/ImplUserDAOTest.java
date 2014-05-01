@@ -34,7 +34,7 @@ public class ImplUserDAOTest extends TestCase {
   public ImplUserDAOTest(String testName) {
     super(testName);
     context = new ClassPathXmlApplicationContext("spring-bean/Spring-Module.xml");
-    userDAO = (IUserDao) context.getBean("userDAO");;
+    userDAO = (IUserDao) context.getBean("userDAO");
   }
 
   /**

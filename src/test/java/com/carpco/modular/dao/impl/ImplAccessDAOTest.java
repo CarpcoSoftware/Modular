@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.IDao;
+import com.carpco.modular.dao.IAccessDao;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Access;
 
@@ -22,7 +22,7 @@ public class ImplAccessDAOTest extends TestCase {
 
   private final ApplicationContext context;
 
-  private final IDao accessDAO;
+  private final IAccessDao accessDAO;
 
   /**
    * Create the test case
@@ -32,7 +32,7 @@ public class ImplAccessDAOTest extends TestCase {
   public ImplAccessDAOTest(String testName) {
     super(testName);
     context = new ClassPathXmlApplicationContext("spring-bean/Spring-Module.xml");
-    accessDAO = (IDao) context.getBean("accessDAO");
+    accessDAO = (IAccessDao) context.getBean("accessDAO");
   }
 
   /**
@@ -86,5 +86,11 @@ public class ImplAccessDAOTest extends TestCase {
     DefaultTableModel access = accessDAO.selectByIdentifier(1);
     System.out.println(access.toString());
     assertTrue(access != null);
+  }
+  
+  public void testSelectByRole() {
+    Set<DefaultTableModel> accessSet = accessDAO.selectByRole(1);
+    System.out.println(accessSet.toString());
+    assertTrue(accessSet != null);
   }
 }

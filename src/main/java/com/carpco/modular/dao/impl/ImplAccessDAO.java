@@ -10,8 +10,8 @@ import java.util.Set;
 
 import org.joda.time.DateTime;
 
-import com.carpco.modular.dao.IDao;
-import com.carpco.modular.dao.impl.mapper.DefaultTableMapper;
+import com.carpco.modular.dao.IAccessDao;
+import com.carpco.modular.dao.impl.mapper.AccessMapper;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Access;
 
@@ -20,7 +20,7 @@ import com.carpco.modular.data.model.administration.Access;
  * 
  * @author Carlos Rodriguez *
  */
-public class ImplAccessDAO extends AbstractImplDAO implements IDao {
+public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
 
   /*
    * (non-Javadoc)
@@ -34,7 +34,7 @@ public class ImplAccessDAO extends AbstractImplDAO implements IDao {
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled ");
     sql.append("FROM access ");
 
-    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new DefaultTableMapper());
+    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new AccessMapper());
     return new HashSet<DefaultTableModel>(accessList);
   }
 
@@ -51,7 +51,7 @@ public class ImplAccessDAO extends AbstractImplDAO implements IDao {
     sql.append("FROM access ");
     sql.append("WHERE enabled = 1 ");
 
-    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new DefaultTableMapper());
+    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new AccessMapper());
     return new HashSet<DefaultTableModel>(accessList);
   }
 
@@ -68,7 +68,7 @@ public class ImplAccessDAO extends AbstractImplDAO implements IDao {
     sql.append("FROM access ");
     sql.append("WHERE enabled = 0 ");
 
-    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new DefaultTableMapper());
+    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new AccessMapper());
     return new HashSet<DefaultTableModel>(accessList);
   }
 
@@ -86,7 +86,7 @@ public class ImplAccessDAO extends AbstractImplDAO implements IDao {
 
     DefaultTableModel access =
         (DefaultTableModel) jdbcTemplateObject.queryForObject(sql.toString(),
-            new Object[] {identifier}, new DefaultTableMapper());
+            new Object[] {identifier}, new AccessMapper());
     return access;
   }
 
@@ -121,6 +121,20 @@ public class ImplAccessDAO extends AbstractImplDAO implements IDao {
     Access access = (Access) record;
     jdbcTemplateObject.update(sql.toString(), new Object[] {access.getCode(), access.getName(),
         new Timestamp(DateTime.now().getMillis()), access.isEnabled(), access.getIdentifier()});
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public Set<DefaultTableModel> selectByRole(int idRole) {
+    StringBuilder sql = new StringBuilder();
+    sql.append("SELECT a.identifier, a.code, a.name, a.dtCreation, a.dtLastUpdate, a.enabled ");
+    sql.append("FROM access a ");
+    sql.append("JOIN modular.role_access ra ON a.identifier = ra.idAccess AND ra.idRole = ? ");
+    sql.append("WHERE a.enabled = 1 ");
+
+    List<Access> accessList =
+        jdbcTemplateObject.query(sql.toString(), new Object[] {idRole}, new AccessMapper());
+    return new HashSet<DefaultTableModel>(accessList);
   }
 
 }
