@@ -3,23 +3,27 @@
  */
 package com.carpco.modular.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.carpco.modular.dao.IAccessDao;
-import com.carpco.modular.dao.impl.mapper.AccessMapper;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Access;
 
 /**
  * Access DAO implementation
  * 
- * @author Carlos Rodriguez *
+ * @author Carlos Rodriguez
  */
+@Repository
 public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
 
   /*
@@ -77,6 +81,7 @@ public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
    * 
    * @see com.carpco.modular.dao.IDao#selectByIdentifier(int)
    */
+  @SuppressWarnings("unchecked")
   @Override
   public DefaultTableModel selectByIdentifier(int identifier) {
     StringBuilder sql = new StringBuilder();
@@ -135,6 +140,28 @@ public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
     List<Access> accessList =
         jdbcTemplateObject.query(sql.toString(), new Object[] {idRole}, new AccessMapper());
     return new HashSet<DefaultTableModel>(accessList);
+  }
+  
+  @SuppressWarnings("rawtypes")
+  private class AccessMapper implements RowMapper {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
+     */
+    @Override
+    public Access mapRow(ResultSet rs, int rowNum) throws SQLException {
+      int identifier = rs.getInt("identifier");
+      String code = rs.getString("code");
+      String name = rs.getString("name");
+      DateTime dtCreation = new DateTime(rs.getTimestamp("dtCreation"));
+      DateTime dtLastUpdate = new DateTime(rs.getTimestamp("dtLastUpdate"));
+      boolean enabled = rs.getBoolean("enabled");
+
+      return new Access(identifier, code, name, dtCreation, dtLastUpdate, enabled);
+    }
+
   }
 
 }

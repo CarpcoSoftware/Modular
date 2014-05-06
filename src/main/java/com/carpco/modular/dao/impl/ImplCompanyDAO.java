@@ -3,15 +3,18 @@
  */
 package com.carpco.modular.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.carpco.modular.dao.ICompanyDao;
-import com.carpco.modular.dao.impl.mapper.CompanyMapper;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Company;
 
@@ -21,6 +24,7 @@ import com.carpco.modular.data.model.administration.Company;
  * @author Carlos Rodriguez
  * 
  */
+@Repository
 public class ImplCompanyDAO extends AbstractImplDAO implements ICompanyDao {
 
   @SuppressWarnings("unchecked")
@@ -58,6 +62,7 @@ public class ImplCompanyDAO extends AbstractImplDAO implements ICompanyDao {
     return new HashSet<DefaultTableModel>(companyList);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public DefaultTableModel selectByIdentifier(int identifier) {
     StringBuilder sql = new StringBuilder();
@@ -96,6 +101,7 @@ public class ImplCompanyDAO extends AbstractImplDAO implements ICompanyDao {
         company.getIdentifier()});
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public DefaultTableModel selectByName(String name) {
     StringBuilder sql = new StringBuilder();
@@ -107,6 +113,29 @@ public class ImplCompanyDAO extends AbstractImplDAO implements ICompanyDao {
         (Company) jdbcTemplateObject.queryForObject(sql.toString(), new Object[] {name},
             new CompanyMapper());
     return company;
+  }
+  
+  @SuppressWarnings("rawtypes")
+  private class CompanyMapper implements RowMapper {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
+     */
+    @Override
+    public Company mapRow(ResultSet rs, int rowNum) throws SQLException {
+      int identifier = rs.getInt("identifier");
+      String code = rs.getString("code");
+      String name = rs.getString("name");
+      DateTime dtCreation = new DateTime(rs.getTimestamp("dtCreation"));
+      DateTime dtLastUpdate = new DateTime(rs.getTimestamp("dtLastUpdate"));
+      boolean enabled = rs.getBoolean("enabled");
+      String dbConnection = rs.getString("dbConnection");
+
+      return new Company(identifier, code, name, dtCreation, dtLastUpdate, enabled, dbConnection);
+    }
+
   }
 
 }

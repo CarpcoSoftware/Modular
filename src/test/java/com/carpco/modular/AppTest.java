@@ -34,6 +34,7 @@ public class AppTest extends TestCase {
   /**
    * Rigourous Test :-)
    */
+  @SuppressWarnings("resource")
   public void testApp() {
     ApplicationContext context =
         new ClassPathXmlApplicationContext("spring-bean/Spring-Module.xml");

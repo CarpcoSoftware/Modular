@@ -5,6 +5,8 @@ package com.carpco.modular.dao;
 
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
@@ -15,6 +17,7 @@ import com.carpco.modular.data.model.DefaultTableModel;
  * @author Carlos Rodriguez
  * 
  */
+@Component
 public interface IUserDao extends IDao {
 
   /**

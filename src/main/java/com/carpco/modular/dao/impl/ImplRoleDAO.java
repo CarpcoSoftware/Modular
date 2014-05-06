@@ -1,18 +1,33 @@
 package com.carpco.modular.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.carpco.modular.dao.IDao;
-import com.carpco.modular.dao.impl.mapper.RoleMapper;
 import com.carpco.modular.data.model.DefaultTableModel;
+import com.carpco.modular.data.model.administration.Access;
 import com.carpco.modular.data.model.administration.Role;
 
+/**
+ * Role DAO implementation
+ * 
+ * @author Carlos Rodriguez
+ * 
+ */
+@Repository
 public class ImplRoleDAO extends AbstractImplDAO implements IDao {
+  
+  @Autowired
+  private ImplAccessDAO accessDao;
 
   @SuppressWarnings("unchecked")
   @Override
@@ -49,6 +64,7 @@ public class ImplRoleDAO extends AbstractImplDAO implements IDao {
     return new HashSet<DefaultTableModel>(roleList);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public DefaultTableModel selectByIdentifier(int identifier) {
     StringBuilder sql = new StringBuilder();
@@ -83,6 +99,34 @@ public class ImplRoleDAO extends AbstractImplDAO implements IDao {
     Role role = (Role) record;
     jdbcTemplateObject.update(sql.toString(), new Object[] {role.getCode(), role.getName(),
         new Timestamp(DateTime.now().getMillis()), role.isEnabled(), role.getIdentifier()});
+  }
+  
+  @SuppressWarnings("rawtypes")
+  private class RoleMapper implements RowMapper {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
+     */
+    @Override
+    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+      int identifier = rs.getInt("identifier");
+      String code = rs.getString("code");
+      String name = rs.getString("name");
+      DateTime dtCreation = new DateTime(rs.getTimestamp("dtCreation"));
+      DateTime dtLastUpdate = new DateTime(rs.getTimestamp("dtLastUpdate"));
+      boolean enabled = rs.getBoolean("enabled");
+
+      Role role = new Role(identifier, code, name, dtCreation, dtLastUpdate, enabled);
+      Set<DefaultTableModel> defaultModelSet = accessDao.selectByRole(identifier);
+
+      for (DefaultTableModel defaultModel : defaultModelSet) {
+        role.addRolePermission((Access) defaultModel);
+      }
+
+      return role;
+    }
   }
 
 }

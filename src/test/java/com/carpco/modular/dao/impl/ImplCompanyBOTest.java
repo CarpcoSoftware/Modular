@@ -7,39 +7,36 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.joda.time.DateTime;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.ICompanyDao;
+import com.carpco.modular.dao.bo.CompanyBO;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Company;
+import com.carpco.modular.spring.ServiceLocator;
 
 /**
  * Unit test for simple App.
  */
-public class ImplCompanyDAOTest extends TestCase {
+public class ImplCompanyBOTest extends TestCase {
 
-  private final ApplicationContext context;
-
-  private final ICompanyDao companyDAO;
+  private final CompanyBO companyBO;
 
   /**
    * Create the test case
    * 
    * @param testName name of the test case
    */
-  public ImplCompanyDAOTest(String testName) {
+  public ImplCompanyBOTest(String testName) {
     super(testName);
-    context = new ClassPathXmlApplicationContext("spring-bean/Spring-Module.xml");
-    companyDAO = (ICompanyDao) context.getBean("companyDAO");;
+    ServiceLocator.init();
+    companyBO = ServiceLocator.getBean(CompanyBO.class);
   }
 
   /**
    * @return the suite of tests being tested
    */
   public static Test suite() {
-    return new TestSuite(ImplCompanyDAOTest.class);
+    return new TestSuite(ImplCompanyBOTest.class);
   }
 
   // public void testInsert() {
@@ -57,7 +54,7 @@ public class ImplCompanyDAOTest extends TestCase {
     try {
       Company company =
           new Company(2, "PR", "Prueba", DateTime.now(), DateTime.now(), false, "Prueba");;
-      companyDAO.update(company);
+      companyBO.update(company);
       assertTrue(true);
     } catch (DataIntegrityViolationException ex) {
       System.out.println(ex);
@@ -66,31 +63,31 @@ public class ImplCompanyDAOTest extends TestCase {
   }
 
   public void testSelect() {
-    Set<DefaultTableModel> companySet = companyDAO.select();
+    Set<DefaultTableModel> companySet = companyBO.select();
     System.out.println(companySet.toString());
     assertTrue(companySet != null);
   }
 
   public void testSelectAllActive() {
-    Set<DefaultTableModel> companySet = companyDAO.selectAllActive();
+    Set<DefaultTableModel> companySet = companyBO.selectAllActive();
     System.out.println(companySet.toString());
     assertTrue(companySet != null);
   }
 
   public void testSelectAllInactive() {
-    Set<DefaultTableModel> companySet = companyDAO.selectAllInactive();
+    Set<DefaultTableModel> companySet = companyBO.selectAllInactive();
     System.out.println(companySet.toString());
     assertTrue(companySet != null);
   }
 
   public void testSelectByIdentifier() {
-    Company company = (Company) companyDAO.selectByIdentifier(1);
+    Company company = (Company) companyBO.selectByIdentifier(1);
     System.out.println(company.toString());
     assertTrue(company != null);
   }
 
   public void testSelectByName() {
-    Company company = (Company) companyDAO.selectByName("CARPCO SOFTWARE");
+    Company company = (Company) companyBO.selectByName("CARPCO SOFTWARE");
     System.out.println(company.toString());
     assertTrue(company != null);
   }

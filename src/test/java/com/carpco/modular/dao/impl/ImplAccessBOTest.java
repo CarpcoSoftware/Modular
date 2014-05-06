@@ -7,39 +7,36 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.joda.time.DateTime;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.IAccessDao;
+import com.carpco.modular.dao.bo.AccessBO;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Access;
+import com.carpco.modular.spring.ServiceLocator;
 
 /**
  * Unit test for simple App.
  */
-public class ImplAccessDAOTest extends TestCase {
-
-  private final ApplicationContext context;
-
-  private final IAccessDao accessDAO;
+public class ImplAccessBOTest extends TestCase {
+  
+  private static AccessBO accessBO;
 
   /**
    * Create the test case
    * 
    * @param testName name of the test case
    */
-  public ImplAccessDAOTest(String testName) {
+  public ImplAccessBOTest(String testName) {
     super(testName);
-    context = new ClassPathXmlApplicationContext("spring-bean/Spring-Module.xml");
-    accessDAO = (IAccessDao) context.getBean("accessDAO");
+    ServiceLocator.init();
+    accessBO = ServiceLocator.getBean(AccessBO.class);
   }
 
   /**
    * @return the suite of tests being tested
    */
   public static Test suite() {
-    return new TestSuite(ImplAccessDAOTest.class);
+    return new TestSuite(ImplAccessBOTest.class);
   }
 
   // public void testInsert() {
@@ -56,7 +53,7 @@ public class ImplAccessDAOTest extends TestCase {
   public void testUpdate() {
     try {
       Access access = new Access(2, "PR", "Prueba", DateTime.now(), DateTime.now(), false);;
-      accessDAO.update(access);
+      accessBO.update(access);
       assertTrue(true);
     } catch (DataIntegrityViolationException ex) {
       System.out.println(ex);
@@ -65,31 +62,31 @@ public class ImplAccessDAOTest extends TestCase {
   }
 
   public void testSelect() {
-    Set<DefaultTableModel> accessSet = accessDAO.select();
+    Set<DefaultTableModel> accessSet = accessBO.select();
     System.out.println(accessSet.toString());
     assertTrue(accessSet != null);
   }
 
   public void testSelectAllActive() {
-    Set<DefaultTableModel> accessSet = accessDAO.selectAllActive();
+    Set<DefaultTableModel> accessSet = accessBO.selectAllActive();
     System.out.println(accessSet.toString());
     assertTrue(accessSet != null);
   }
 
   public void testSelectAllInactive() {
-    Set<DefaultTableModel> accessSet = accessDAO.selectAllInactive();
+    Set<DefaultTableModel> accessSet = accessBO.selectAllInactive();
     System.out.println(accessSet.toString());
     assertTrue(accessSet != null);
   }
 
   public void testSelectByIdentifier() {
-    DefaultTableModel access = accessDAO.selectByIdentifier(1);
+    DefaultTableModel access = accessBO.selectByIdentifier(1);
     System.out.println(access.toString());
     assertTrue(access != null);
   }
   
   public void testSelectByRole() {
-    Set<DefaultTableModel> accessSet = accessDAO.selectByRole(1);
+    Set<DefaultTableModel> accessSet = accessBO.selectByRole(1);
     System.out.println(accessSet.toString());
     assertTrue(accessSet != null);
   }

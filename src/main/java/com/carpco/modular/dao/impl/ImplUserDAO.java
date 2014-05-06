@@ -3,16 +3,22 @@
  */
 package com.carpco.modular.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.carpco.modular.dao.IUserDao;
-import com.carpco.modular.dao.impl.mapper.UserMapper;
 import com.carpco.modular.data.model.DefaultTableModel;
+import com.carpco.modular.data.model.administration.Company;
+import com.carpco.modular.data.model.administration.Role;
 import com.carpco.modular.data.model.administration.User;
 
 /**
@@ -21,7 +27,14 @@ import com.carpco.modular.data.model.administration.User;
  * @author Carlos Rodriguez
  * 
  */
+@Repository
 public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
+  
+  @Autowired
+  private ImplRoleDAO roleDAO;
+  
+  @Autowired
+  private ImplCompanyDAO companyDAO;
 
   @SuppressWarnings("unchecked")
   @Override
@@ -88,6 +101,7 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
                 user.getRole().getIdentifier(), user.getIdentifier()});
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public User selectByLoginPassword(String login, String password) {
     StringBuilder sql = new StringBuilder();
@@ -101,6 +115,7 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
     return user;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public User selectByIdentifier(int identifier) {
     StringBuilder sql = new StringBuilder();
@@ -136,5 +151,38 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
 
     List<User> userList = jdbcTemplateObject.query(sql.toString(), new Object[] {idRole}, new UserMapper());
     return new HashSet<DefaultTableModel>(userList);
+  }
+  
+  @SuppressWarnings("rawtypes")
+  private class UserMapper implements RowMapper {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
+     */
+    @Override
+    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+      int identifier = rs.getInt("identifier");
+      String code = rs.getString("code");
+      String name = rs.getString("name");
+      DateTime dtCreation = new DateTime(rs.getTimestamp("dtCreation"));
+      DateTime dtLastUpdate = new DateTime(rs.getTimestamp("dtLastUpdate"));
+      boolean enabled = rs.getBoolean("enabled");
+      String login = rs.getString("login");
+      String password = rs.getString("password");
+      int idCompany = rs.getInt("idCompany");
+      int idRole = rs.getInt("idRole");
+
+      User user =
+          new User(identifier, code, name, dtCreation, dtLastUpdate, enabled, login, password);
+      
+      user.setCompany((Company) companyDAO.selectByIdentifier(idCompany));
+      
+      user.setRole((Role) roleDAO.selectByIdentifier(idRole));
+
+      return user;
+    }
+
   }
 }

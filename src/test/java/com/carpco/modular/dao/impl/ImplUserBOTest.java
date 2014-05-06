@@ -7,41 +7,38 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.joda.time.DateTime;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.IUserDao;
+import com.carpco.modular.dao.bo.UserBO;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Company;
 import com.carpco.modular.data.model.administration.Role;
 import com.carpco.modular.data.model.administration.User;
+import com.carpco.modular.spring.ServiceLocator;
 
 /**
  * Unit test for simple App.
  */
-public class ImplUserDAOTest extends TestCase {
+public class ImplUserBOTest extends TestCase {
 
-  private final ApplicationContext context;
-
-  private final IUserDao userDAO;
+  private final UserBO userBO;
 
   /**
    * Create the test case
    * 
    * @param testName name of the test case
    */
-  public ImplUserDAOTest(String testName) {
+  public ImplUserBOTest(String testName) {
     super(testName);
-    context = new ClassPathXmlApplicationContext("spring-bean/Spring-Module.xml");
-    userDAO = (IUserDao) context.getBean("userDAO");
+    ServiceLocator.init();
+    userBO = ServiceLocator.getBean(UserBO.class);
   }
 
   /**
    * @return the suite of tests being tested
    */
   public static Test suite() {
-    return new TestSuite(ImplUserDAOTest.class);
+    return new TestSuite(ImplUserBOTest.class);
   }
 
   // public void testInsert() {
@@ -64,7 +61,7 @@ public class ImplUserDAOTest extends TestCase {
       User user = new User("CARP", "Prueba", "prueba", "prueba", company, role);
       user.setIdentifier(2);
       user.setEnabled(false);
-      userDAO.update(user);
+      userBO.update(user);
       assertTrue(true);
     } catch (DataIntegrityViolationException ex) {
       System.out.println(ex);
@@ -73,43 +70,43 @@ public class ImplUserDAOTest extends TestCase {
   }
 
   public void testSelect() {
-    Set<DefaultTableModel> userSet = userDAO.select();
+    Set<DefaultTableModel> userSet = userBO.select();
     System.out.println(userSet.toString());
     assertTrue(userSet != null);
   }
 
   public void testSelectAllActive() {
-    Set<DefaultTableModel> userSet = userDAO.selectAllActive();
+    Set<DefaultTableModel> userSet = userBO.selectAllActive();
     System.out.println(userSet.toString());
     assertTrue(userSet != null);
   }
 
   public void testSelectAllInactive() {
-    Set<DefaultTableModel> userSet = userDAO.selectAllInactive();
+    Set<DefaultTableModel> userSet = userBO.selectAllInactive();
     System.out.println(userSet.toString());
     assertTrue(userSet != null);
   }
 
   public void testSelectByIdentifier() {
-    User user = (User) userDAO.selectByIdentifier(1);
+    User user = (User) userBO.selectByIdentifier(1);
     System.out.println(user.toString());
     assertTrue(user != null);
   }
 
   public void testSelectByLoginPassword() {
-    DefaultTableModel user = userDAO.selectByLoginPassword("cpatino", "Modular020486");
+    DefaultTableModel user = userBO.selectByLoginPassword("cpatino", "Modular020486");
     System.out.println(user.toString());
     assertTrue(user != null);
   }
 
   public void testSelectByCompany() {
-    Set<DefaultTableModel> userSet = userDAO.selectByCompany(1);
+    Set<DefaultTableModel> userSet = userBO.selectByCompany(1);
     System.out.println(userSet.toString());
     assertTrue(userSet != null);
   }
 
   public void testSelectByRole() {
-    Set<DefaultTableModel> userSet = userDAO.selectByRole(1);
+    Set<DefaultTableModel> userSet = userBO.selectByRole(1);
     System.out.println(userSet.toString());
     assertTrue(userSet != null);
   }

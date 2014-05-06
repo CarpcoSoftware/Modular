@@ -1,11 +1,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
  
-	<import resource="database/Spring-Datasource.xml" />
-	<import resource="table/Spring-User.xml" />
-	<import resource="table/Spring-Company.xml" />
-	<import resource="table/Spring-Access.xml" />
-	<import resource="table/Spring-Role.xml" />
+ 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/modular" />
+		<property name="username" value="root" />
+		<property name="password" value="Mysql020486" />
+	</bean>
+	
+	<context:component-scan base-package="com.carpco.modular.dao" />
 </beans>

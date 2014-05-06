@@ -7,39 +7,36 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.joda.time.DateTime;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.IDao;
+import com.carpco.modular.dao.bo.RoleBO;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Role;
+import com.carpco.modular.spring.ServiceLocator;
 
 /**
  * Unit test for simple App.
  */
-public class ImplRoleDAOTest extends TestCase {
+public class ImplRoleBOTest extends TestCase {
 
-  private final ApplicationContext context;
-
-  private final IDao roleDAO;
+  private static RoleBO roleBO;
 
   /**
    * Create the test case
    * 
    * @param testName name of the test case
    */
-  public ImplRoleDAOTest(String testName) {
+  public ImplRoleBOTest(String testName) {
     super(testName);
-    context = new ClassPathXmlApplicationContext("spring-bean/Spring-Module.xml");
-    roleDAO = (IDao) context.getBean("roleDAO");
+    ServiceLocator.init();
+    roleBO = ServiceLocator.getBean(RoleBO.class);
   }
 
   /**
    * @return the suite of tests being tested
    */
   public static Test suite() {
-    return new TestSuite(ImplRoleDAOTest.class);
+    return new TestSuite(ImplRoleBOTest.class);
   }
 
 //  public void testInsert() {
@@ -56,7 +53,7 @@ public class ImplRoleDAOTest extends TestCase {
   public void testUpdate() {
     try {
       Role role = new Role(2, "PR", "Prueba", DateTime.now(), DateTime.now(), false);;
-      roleDAO.update(role);
+      roleBO.update(role);
       assertTrue(true);
     } catch (DataIntegrityViolationException ex) {
       System.out.println(ex);
@@ -65,25 +62,25 @@ public class ImplRoleDAOTest extends TestCase {
   }
 
   public void testSelect() {
-    Set<DefaultTableModel> roleSet = roleDAO.select();
+    Set<DefaultTableModel> roleSet = roleBO.select();
     System.out.println(roleSet.toString());
     assertTrue(roleSet != null);
   }
 
   public void testSelectAllActive() {
-    Set<DefaultTableModel> roleSet = roleDAO.selectAllActive();
+    Set<DefaultTableModel> roleSet = roleBO.selectAllActive();
     System.out.println(roleSet.toString());
     assertTrue(roleSet != null);
   }
 
   public void testSelectAllInactive() {
-    Set<DefaultTableModel> roleSet = roleDAO.selectAllInactive();
+    Set<DefaultTableModel> roleSet = roleBO.selectAllInactive();
     System.out.println(roleSet.toString());
     assertTrue(roleSet != null);
   }
 
   public void testSelectByIdentifier() {
-    DefaultTableModel role = roleDAO.selectByIdentifier(1);
+    DefaultTableModel role = roleBO.selectByIdentifier(1);
     System.out.println(role.toString());
     assertTrue(role != null);
   }

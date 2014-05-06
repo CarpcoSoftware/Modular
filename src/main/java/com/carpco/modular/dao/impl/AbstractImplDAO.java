@@ -5,6 +5,7 @@ package com.carpco.modular.dao.impl;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -16,11 +17,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public abstract class AbstractImplDAO {
 
   /**
-   * Data source to allow access to database
-   */
-  protected DataSource dataSource;
-
-  /**
    * {@link JdbcTemplate} object used to execute statements
    */
   protected JdbcTemplate jdbcTemplateObject;
@@ -30,8 +26,8 @@ public abstract class AbstractImplDAO {
    * 
    * @param dataSource Data source to be set
    */
+  @Autowired
   public void setDataSource(DataSource dataSource) {
-    this.dataSource = dataSource;
     this.jdbcTemplateObject = new JdbcTemplate(dataSource);
   }
 }
