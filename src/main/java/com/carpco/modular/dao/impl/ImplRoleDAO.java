@@ -70,7 +70,7 @@ public class ImplRoleDAO extends AbstractImplDAO implements IDao {
     StringBuilder sql = new StringBuilder();
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled ");
     sql.append("FROM role ");
-    sql.append("WHERE identifier = ? AND enabled = 1 ");
+    sql.append("WHERE identifier = ? ");
 
     DefaultTableModel access =
         (DefaultTableModel) jdbcTemplateObject.queryForObject(sql.toString(),

@@ -3,6 +3,8 @@ package com.carpco.modular.data.model.location;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
@@ -17,6 +19,31 @@ public class Country extends DefaultTableModel {
    * Set of states(departments) that are in the country.
    */
   private Set<State> stateSet;
+  
+  /**
+   * {@link Country} constructor with parameters code and name
+   * 
+   * @param code Code that will be used for record
+   * @param name Name that will be used for record
+   */
+  public Country(String code, String name) {
+    super(code, name);
+  }
+
+  /**
+   * {@link Country} constructor with all parameters
+   * 
+   * @param identifier Identifier from database
+   * @param code Code from database
+   * @param name Name from database
+   * @param dtCreation Record's creation date and time
+   * @param dtLastUpdate Record's last update date and time
+   * @param enabled Flag to identify if record is enabled or disabled
+   */
+  public Country(int identifier, String code, String name, DateTime dtCreation,
+      DateTime dtLastUpdate, boolean enabled) {
+    super(identifier, code, name, dtCreation, dtLastUpdate, enabled);
+  }
 
   /**
    * @return the stateSet

@@ -3,6 +3,8 @@ package com.carpco.modular.data.model.location;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import com.carpco.modular.data.model.DefaultTableModel;
 
 /**
@@ -22,6 +24,35 @@ public class State extends DefaultTableModel {
    * Country that state is linked
    */
   private Country country;
+  
+  /**
+   * {@link State} constructor with parameters code and name
+   * 
+   * @param code Code that will be used for record
+   * @param name Name that will be used for record
+   * @param country Country linked to state
+   */
+  public State(String code, String name, Country country) {
+    super(code, name);
+    this.country = country;
+  }
+
+  /**
+   * {@link State} constructor with all parameters
+   * 
+   * @param identifier Identifier from database
+   * @param code Code from database
+   * @param name Name from database
+   * @param dtCreation Record's creation date and time
+   * @param dtLastUpdate Record's last update date and time
+   * @param enabled Flag to identify if record is enabled or disabled
+   * @param country Country linked to state
+   */
+  public State(int identifier, String code, String name, DateTime dtCreation,
+      DateTime dtLastUpdate, boolean enabled, Country country) {
+    super(identifier, code, name, dtCreation, dtLastUpdate, enabled);
+    this.country = country;
+  }
 
   /**
    * @return the citySet
@@ -63,21 +94,17 @@ public class State extends DefaultTableModel {
     this.country = country;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
-    return "State [citySet=" + citySet + ", identification=" + identifier + ", code=" + code
-        + ", name=" + name + ", dtCreation=" + dtCreation + ", dtLastUpdate=" + dtLastUpdate
-        + ", enabled=" + enabled + "]";
+    return "State [citySet=" + citySet + ", country=" + country + ", identifier=" + identifier
+        + ", code=" + code + ", name=" + name + ", dtCreation=" + dtCreation + ", dtLastUpdate="
+        + dtLastUpdate + ", enabled=" + enabled + "]";
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -85,12 +112,11 @@ public class State extends DefaultTableModel {
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + ((citySet == null) ? 0 : citySet.hashCode());
+    result = prime * result + ((country == null) ? 0 : country.hashCode());
     return result;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -106,6 +132,11 @@ public class State extends DefaultTableModel {
       if (other.citySet != null)
         return false;
     } else if (!citySet.equals(other.citySet))
+      return false;
+    if (country == null) {
+      if (other.country != null)
+        return false;
+    } else if (!country.equals(other.country))
       return false;
     return true;
   }

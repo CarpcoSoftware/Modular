@@ -68,7 +68,7 @@ public class ImplCompanyDAO extends AbstractImplDAO implements ICompanyDao {
     StringBuilder sql = new StringBuilder();
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled, dbConnection ");
     sql.append("FROM company ");
-    sql.append("WHERE identifier = ? AND enabled = 1 ");
+    sql.append("WHERE identifier = ? ");
 
     Company company =
         (Company) jdbcTemplateObject.queryForObject(sql.toString(), new Object[] {identifier},

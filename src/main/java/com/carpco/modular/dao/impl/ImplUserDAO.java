@@ -121,7 +121,7 @@ public class ImplUserDAO extends AbstractImplDAO implements IUserDao {
     StringBuilder sql = new StringBuilder();
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled, login, password, idCompany, idRole ");
     sql.append("FROM user ");
-    sql.append("WHERE identifier = ? AND enabled = 1 ");
+    sql.append("WHERE identifier = ? ");
 
     User user =
         (User) jdbcTemplateObject.queryForObject(sql.toString(), new Object[] {identifier},

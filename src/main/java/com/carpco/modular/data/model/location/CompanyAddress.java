@@ -1,6 +1,7 @@
 package com.carpco.modular.data.model.location;
 
 import com.carpco.modular.data.model.DefaultTableModel;
+import com.carpco.modular.data.model.administration.Company;
 
 /**
  * Company address is a model from database table.
@@ -11,6 +12,11 @@ import com.carpco.modular.data.model.DefaultTableModel;
  * 
  */
 public class CompanyAddress extends DefaultTableModel {
+  
+  /**
+   * Company linked to address
+   */
+  private Company company;
 
   /**
    * Flag to identify if it is the default client address.
@@ -43,6 +49,20 @@ public class CompanyAddress extends DefaultTableModel {
     this.code = code;
     this.name = name;
     this.city = city;
+  }
+
+  /**
+   * @return the company
+   */
+  public Company getCompany() {
+    return company;
+  }
+
+  /**
+   * @param company the company to set
+   */
+  public void setCompany(Company company) {
+    this.company = company;
   }
 
   /**
@@ -101,22 +121,18 @@ public class CompanyAddress extends DefaultTableModel {
     this.phone2 = phone2;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
-    return "CompanyAddress [defaultAddress=" + defaultAddress + ", phone1=" + phone1 + ", phone2="
-        + phone2 + ", city=" + city + ", identification=" + identifier + ", code=" + code
-        + ", name=" + name + ", dtCreation=" + dtCreation + ", dtLastUpdate=" + dtLastUpdate
-        + ", enabled=" + enabled + "]";
+    return "CompanyAddress [company=" + company + ", defaultAddress=" + defaultAddress
+        + ", phone1=" + phone1 + ", phone2=" + phone2 + ", city=" + city + ", identifier="
+        + identifier + ", code=" + code + ", name=" + name + ", dtCreation=" + dtCreation
+        + ", dtLastUpdate=" + dtLastUpdate + ", enabled=" + enabled + "]";
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -124,15 +140,14 @@ public class CompanyAddress extends DefaultTableModel {
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + ((city == null) ? 0 : city.hashCode());
+    result = prime * result + ((company == null) ? 0 : company.hashCode());
     result = prime * result + (defaultAddress ? 1231 : 1237);
     result = prime * result + ((phone1 == null) ? 0 : phone1.hashCode());
     result = prime * result + ((phone2 == null) ? 0 : phone2.hashCode());
     return result;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -148,6 +163,11 @@ public class CompanyAddress extends DefaultTableModel {
       if (other.city != null)
         return false;
     } else if (!city.equals(other.city))
+      return false;
+    if (company == null) {
+      if (other.company != null)
+        return false;
+    } else if (!company.equals(other.company))
       return false;
     if (defaultAddress != other.defaultAddress)
       return false;

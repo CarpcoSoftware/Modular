@@ -14,21 +14,19 @@ import org.joda.time.DateTime;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.carpco.modular.dao.IAccessDao;
+import com.carpco.modular.dao.IDao;
 import com.carpco.modular.data.model.DefaultTableModel;
-import com.carpco.modular.data.model.administration.Access;
+import com.carpco.modular.data.model.location.Country;
 
 /**
- * Access DAO implementation
+ * Country DAO implementation
  * 
  * @author Carlos Rodriguez
  */
 @Repository
-public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
+public class ImplCountryDAO extends AbstractImplDAO implements IDao {
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#select()
    */
   @SuppressWarnings("unchecked")
@@ -36,15 +34,13 @@ public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
   public Set<DefaultTableModel> select() {
     StringBuilder sql = new StringBuilder();
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled ");
-    sql.append("FROM access ");
+    sql.append("FROM country ");
 
-    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new AccessMapper());
-    return new HashSet<DefaultTableModel>(accessList);
+    List<Country> countryList = jdbcTemplateObject.query(sql.toString(), new CountryMapper());
+    return new HashSet<DefaultTableModel>(countryList);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#selectAllActive()
    */
   @SuppressWarnings("unchecked")
@@ -52,16 +48,14 @@ public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
   public Set<DefaultTableModel> selectAllActive() {
     StringBuilder sql = new StringBuilder();
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled ");
-    sql.append("FROM access ");
+    sql.append("FROM country ");
     sql.append("WHERE enabled = 1 ");
 
-    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new AccessMapper());
-    return new HashSet<DefaultTableModel>(accessList);
+    List<Country> countryList = jdbcTemplateObject.query(sql.toString(), new CountryMapper());
+    return new HashSet<DefaultTableModel>(countryList);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#selectAllInactive()
    */
   @SuppressWarnings("unchecked")
@@ -69,16 +63,14 @@ public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
   public Set<DefaultTableModel> selectAllInactive() {
     StringBuilder sql = new StringBuilder();
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled ");
-    sql.append("FROM access ");
+    sql.append("FROM country ");
     sql.append("WHERE enabled = 0 ");
 
-    List<Access> accessList = jdbcTemplateObject.query(sql.toString(), new AccessMapper());
-    return new HashSet<DefaultTableModel>(accessList);
+    List<Country> countryList = jdbcTemplateObject.query(sql.toString(), new CountryMapper());
+    return new HashSet<DefaultTableModel>(countryList);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#selectByIdentifier(int)
    */
   @SuppressWarnings("unchecked")
@@ -86,64 +78,46 @@ public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
   public DefaultTableModel selectByIdentifier(int identifier) {
     StringBuilder sql = new StringBuilder();
     sql.append("SELECT identifier, code, name, dtCreation, dtLastUpdate, enabled ");
-    sql.append("FROM access ");
+    sql.append("FROM country ");
     sql.append("WHERE identifier = ? ");
 
-    DefaultTableModel access =
+    DefaultTableModel country =
         (DefaultTableModel) jdbcTemplateObject.queryForObject(sql.toString(),
-            new Object[] {identifier}, new AccessMapper());
-    return access;
+            new Object[] {identifier}, new CountryMapper());
+    return country;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#insert(com.carpco.modular.data.model.DefaultTableModel)
    */
   @Override
   public void insert(DefaultTableModel newRecord) {
     StringBuilder sql = new StringBuilder();
-    sql.append("INSERT INTO access ");
+    sql.append("INSERT INTO country ");
     sql.append("(code, name) ");
     sql.append("VALUES (?, ?)");
 
-    Access access = (Access) newRecord;
-    jdbcTemplateObject.update(sql.toString(), new Object[] {access.getCode(), access.getName()});
+    Country country = (Country) newRecord;
+    jdbcTemplateObject.update(sql.toString(), new Object[] {country.getCode(), country.getName()});
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#update(com.carpco.modular.data.model.DefaultTableModel)
    */
   @Override
   public void update(DefaultTableModel record) {
     StringBuilder sql = new StringBuilder();
-    sql.append("UPDATE access ");
+    sql.append("UPDATE country ");
     sql.append("SET code = ?, name = ?, dtLastUpdate = ?, enabled = ? ");
     sql.append("WHERE identifier = ? ");
 
-    Access access = (Access) record;
-    jdbcTemplateObject.update(sql.toString(), new Object[] {access.getCode(), access.getName(),
-        new Timestamp(DateTime.now().getMillis()), access.isEnabled(), access.getIdentifier()});
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public Set<DefaultTableModel> selectByRole(int idRole) {
-    StringBuilder sql = new StringBuilder();
-    sql.append("SELECT a.identifier, a.code, a.name, a.dtCreation, a.dtLastUpdate, a.enabled ");
-    sql.append("FROM access a ");
-    sql.append("JOIN modular.role_access ra ON a.identifier = ra.idAccess AND ra.idRole = ? ");
-    sql.append("WHERE a.enabled = 1 ");
-
-    List<Access> accessList =
-        jdbcTemplateObject.query(sql.toString(), new Object[] {idRole}, new AccessMapper());
-    return new HashSet<DefaultTableModel>(accessList);
+    Country country = (Country) record;
+    jdbcTemplateObject.update(sql.toString(), new Object[] {country.getCode(), country.getName(),
+        new Timestamp(DateTime.now().getMillis()), country.isEnabled(), country.getIdentifier()});
   }
   
   @SuppressWarnings("rawtypes")
-  private class AccessMapper implements RowMapper {
+  private class CountryMapper implements RowMapper {
 
     /*
      * (non-Javadoc)
@@ -151,7 +125,7 @@ public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
      * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
      */
     @Override
-    public Access mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public Country mapRow(ResultSet rs, int rowNum) throws SQLException {
       int identifier = rs.getInt("identifier");
       String code = rs.getString("code");
       String name = rs.getString("name");
@@ -159,7 +133,7 @@ public class ImplAccessDAO extends AbstractImplDAO implements IAccessDao {
       DateTime dtLastUpdate = new DateTime(rs.getTimestamp("dtLastUpdate"));
       boolean enabled = rs.getBoolean("enabled");
 
-      return new Access(identifier, code, name, dtCreation, dtLastUpdate, enabled);
+      return new Country(identifier, code, name, dtCreation, dtLastUpdate, enabled);
     }
 
   }
