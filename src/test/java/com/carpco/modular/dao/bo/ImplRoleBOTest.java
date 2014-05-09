@@ -1,4 +1,4 @@
-package com.carpco.modular.dao.impl;
+package com.carpco.modular.dao.bo;
 
 import java.util.Set;
 
@@ -6,10 +6,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.joda.time.DateTime;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.bo.RoleBO;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Role;
 import com.carpco.modular.spring.ServiceLocator;
@@ -19,7 +17,7 @@ import com.carpco.modular.spring.ServiceLocator;
  */
 public class ImplRoleBOTest extends TestCase {
 
-  private static RoleBO roleBO;
+  private final RoleBO roleBO;
 
   /**
    * Create the test case
@@ -39,20 +37,21 @@ public class ImplRoleBOTest extends TestCase {
     return new TestSuite(ImplRoleBOTest.class);
   }
 
-//  public void testInsert() {
-//    try {
-//      Role role = new Role("PR", "Prueba");
-//      roleDAO.insert(role);
-//      assertTrue(true);
-//    } catch (DataIntegrityViolationException ex) {
-//      System.out.println(ex);
-//      assertTrue(false);
-//    }
-//  }
+  public void testInsert() {
+    try {
+      Role role = new Role("PR", "Prueba");
+      roleBO.insert(role);
+      assertTrue(true);
+    } catch (DataIntegrityViolationException ex) {
+      System.out.println(ex);
+      assertTrue(false);
+    }
+  }
 
   public void testUpdate() {
     try {
-      Role role = new Role(2, "PR", "Prueba", DateTime.now(), DateTime.now(), false);;
+      Role role = (Role) roleBO.selectByIdentifier(2);
+      role.setEnabled(false);
       roleBO.update(role);
       assertTrue(true);
     } catch (DataIntegrityViolationException ex) {

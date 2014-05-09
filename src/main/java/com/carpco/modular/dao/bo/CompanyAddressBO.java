@@ -5,6 +5,9 @@ package com.carpco.modular.dao.bo;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.carpco.modular.dao.ICompanyAddressDao;
 import com.carpco.modular.dao.impl.ImplCompanyAddressDAO;
 import com.carpco.modular.data.model.DefaultTableModel;
@@ -14,15 +17,18 @@ import com.carpco.modular.data.model.DefaultTableModel;
  * 
  * @author Carlos Rodriguez
  */
+@Service
 public class CompanyAddressBO implements ICompanyAddressDao {
+  
+  @Autowired
+  private ImplCompanyAddressDAO companyAddressDAO;
 
   /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#select()
    */
   @Override
   public Set<DefaultTableModel> select() {
-    // TODO Auto-generated method stub
-    return null;
+    return companyAddressDAO.select();
   }
 
   /* (non-Javadoc)
@@ -30,8 +36,7 @@ public class CompanyAddressBO implements ICompanyAddressDao {
    */
   @Override
   public Set<DefaultTableModel> selectAllActive() {
-    // TODO Auto-generated method stub
-    return null;
+    return companyAddressDAO.selectAllActive();
   }
 
   /* (non-Javadoc)
@@ -39,8 +44,7 @@ public class CompanyAddressBO implements ICompanyAddressDao {
    */
   @Override
   public Set<DefaultTableModel> selectAllInactive() {
-    // TODO Auto-generated method stub
-    return null;
+    return companyAddressDAO.selectAllInactive();
   }
 
   /* (non-Javadoc)
@@ -48,8 +52,7 @@ public class CompanyAddressBO implements ICompanyAddressDao {
    */
   @Override
   public DefaultTableModel selectByIdentifier(int identifier) {
-    // TODO Auto-generated method stub
-    return null;
+    return companyAddressDAO.selectByIdentifier(identifier);
   }
 
   /* (non-Javadoc)
@@ -57,8 +60,7 @@ public class CompanyAddressBO implements ICompanyAddressDao {
    */
   @Override
   public void insert(DefaultTableModel newRecord) {
-    // TODO Auto-generated method stub
-
+    companyAddressDAO.insert(newRecord);
   }
 
   /* (non-Javadoc)
@@ -66,8 +68,7 @@ public class CompanyAddressBO implements ICompanyAddressDao {
    */
   @Override
   public void update(DefaultTableModel record) {
-    // TODO Auto-generated method stub
-
+    companyAddressDAO.update(record);
   }
 
   /* (non-Javadoc)
@@ -75,8 +76,7 @@ public class CompanyAddressBO implements ICompanyAddressDao {
    */
   @Override
   public Set<DefaultTableModel> selectByCompany(int idCompany) {
-    // TODO Auto-generated method stub
-    return null;
+    return companyAddressDAO.selectByCompany(idCompany);
   }
 
   /* (non-Javadoc)
@@ -84,8 +84,12 @@ public class CompanyAddressBO implements ICompanyAddressDao {
    */
   @Override
   public DefaultTableModel selectDefaultAddressByCompany(int idCompany) {
-    // TODO Auto-generated method stub
-    return null;
+    return companyAddressDAO.selectDefaultAddressByCompany(idCompany);
+  }
+
+  @Override
+  public Set<DefaultTableModel> selectByCity(int idCity) {
+    return companyAddressDAO.selectByCity(idCity);
   }
 
 }

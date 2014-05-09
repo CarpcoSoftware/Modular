@@ -1,4 +1,4 @@
-package com.carpco.modular.dao.impl;
+package com.carpco.modular.dao.bo;
 
 import java.util.Set;
 
@@ -6,10 +6,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.joda.time.DateTime;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.bo.CompanyBO;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Company;
 import com.carpco.modular.spring.ServiceLocator;
@@ -39,21 +37,21 @@ public class ImplCompanyBOTest extends TestCase {
     return new TestSuite(ImplCompanyBOTest.class);
   }
 
-  // public void testInsert() {
-  // try {
-  // Company company = new Company("PR", "Prueba", "Prueba");
-  // companyDAO.insert(company);
-  // assertTrue(true);
-  // } catch (DataIntegrityViolationException ex) {
-  // System.out.println(ex);
-  // assertTrue(false);
-  // }
-  // }
+  public void testInsert() {
+    try {
+      Company company = new Company("PR", "Prueba", "Prueba");
+      companyBO.insert(company);
+      assertTrue(true);
+    } catch (DataIntegrityViolationException ex) {
+      System.out.println(ex);
+      assertTrue(false);
+    }
+  }
 
   public void testUpdate() {
     try {
-      Company company =
-          new Company(2, "PR", "Prueba", DateTime.now(), DateTime.now(), false, "Prueba");;
+      Company company = (Company) companyBO.selectByIdentifier(2);
+      company.setEnabled(false);
       companyBO.update(company);
       assertTrue(true);
     } catch (DataIntegrityViolationException ex) {

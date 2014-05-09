@@ -1,5 +1,7 @@
 package com.carpco.modular.data.model.location;
 
+import org.joda.time.DateTime;
+
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Company;
 
@@ -39,15 +41,44 @@ public class CompanyAddress extends DefaultTableModel {
   private City city;
 
   /**
-   * Company address Constructor
+   * {@link CompanyAddress} constructor
    * 
-   * @param code Address code
-   * @param name City name
+   * @param name Address
+   * @param phone1 Phone line
+   * @param company Company linked to address
+   * @param city City linked to address
    */
-  public CompanyAddress(String code, String name, City city) {
+  public CompanyAddress(String name, String phone1, Company company, City city) {
     super();
-    this.code = code;
     this.name = name;
+    this.phone1 = phone1;
+    this.company = company;
+    this.city = city;
+  }
+  
+  /**
+   * {@link CompanyAddress} constructor
+   * 
+   * @param identifier Address identifier
+   * @param code Address code 
+   * @param name Address
+   * @param dtCreation Record's creation date
+   * @param dtLastUpdate Record's last update date
+   * @param enabled Flag to identify if record is enabled or disabled
+   * @param company Company linked to address
+   * @param defaultAddress Flag to identify if address is the company default address
+   * @param phone1 Phone line
+   * @param phone2 Phone line
+   * @param city City linked to address
+   */
+  public CompanyAddress(int identifier, String code, String name, DateTime dtCreation,
+      DateTime dtLastUpdate, boolean enabled, Company company, boolean defaultAddress,
+      String phone1, String phone2, City city) {
+    super(identifier, code, name, dtCreation, dtLastUpdate, enabled);
+    this.company = company;
+    this.defaultAddress = defaultAddress;
+    this.phone1 = phone1;
+    this.phone2 = phone2;
     this.city = city;
   }
 

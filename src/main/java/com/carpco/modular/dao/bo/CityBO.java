@@ -5,6 +5,9 @@ package com.carpco.modular.dao.bo;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.carpco.modular.dao.ICityDao;
 import com.carpco.modular.dao.impl.ImplCityDAO;
 import com.carpco.modular.data.model.DefaultTableModel;
@@ -14,15 +17,18 @@ import com.carpco.modular.data.model.DefaultTableModel;
  * 
  * @author Carlos Rodriguez
  */
+@Service
 public class CityBO implements ICityDao {
+  
+  @Autowired
+  private ImplCityDAO cityDAO;
 
   /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#select()
    */
   @Override
   public Set<DefaultTableModel> select() {
-    // TODO Auto-generated method stub
-    return null;
+    return cityDAO.select();
   }
 
   /* (non-Javadoc)
@@ -30,8 +36,7 @@ public class CityBO implements ICityDao {
    */
   @Override
   public Set<DefaultTableModel> selectAllActive() {
-    // TODO Auto-generated method stub
-    return null;
+    return cityDAO.selectAllActive();
   }
 
   /* (non-Javadoc)
@@ -39,8 +44,7 @@ public class CityBO implements ICityDao {
    */
   @Override
   public Set<DefaultTableModel> selectAllInactive() {
-    // TODO Auto-generated method stub
-    return null;
+    return cityDAO.selectAllInactive();
   }
 
   /* (non-Javadoc)
@@ -48,8 +52,7 @@ public class CityBO implements ICityDao {
    */
   @Override
   public DefaultTableModel selectByIdentifier(int identifier) {
-    // TODO Auto-generated method stub
-    return null;
+    return cityDAO.selectByIdentifier(identifier);
   }
 
   /* (non-Javadoc)
@@ -57,8 +60,7 @@ public class CityBO implements ICityDao {
    */
   @Override
   public void insert(DefaultTableModel newRecord) {
-    // TODO Auto-generated method stub
-
+    cityDAO.insert(newRecord);
   }
 
   /* (non-Javadoc)
@@ -66,8 +68,7 @@ public class CityBO implements ICityDao {
    */
   @Override
   public void update(DefaultTableModel record) {
-    // TODO Auto-generated method stub
-
+    cityDAO.update(record);
   }
 
   /* (non-Javadoc)
@@ -75,8 +76,7 @@ public class CityBO implements ICityDao {
    */
   @Override
   public Set<DefaultTableModel> selectByState(int idState) {
-    // TODO Auto-generated method stub
-    return null;
+    return cityDAO.selectByState(idState);
   }
 
 }

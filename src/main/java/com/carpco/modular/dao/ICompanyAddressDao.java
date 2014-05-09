@@ -36,5 +36,13 @@ public interface ICompanyAddressDao extends IDao {
    * @return Default address if company is correct, null otherwise
    */
   public DefaultTableModel selectDefaultAddressByCompany(int idCompany);
+  
+  /**
+   * Select address set using the city identifier
+   * 
+   * @param idCity City identifier
+   * @return Address set if city is correct, null otherwise
+   */
+  public Set<DefaultTableModel> selectByCity(int idCity);
 
 }

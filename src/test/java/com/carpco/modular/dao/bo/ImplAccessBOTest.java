@@ -1,4 +1,4 @@
-package com.carpco.modular.dao.impl;
+package com.carpco.modular.dao.bo;
 
 import java.util.Set;
 
@@ -6,10 +6,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.joda.time.DateTime;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.bo.AccessBO;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Access;
 import com.carpco.modular.spring.ServiceLocator;
@@ -19,7 +17,7 @@ import com.carpco.modular.spring.ServiceLocator;
  */
 public class ImplAccessBOTest extends TestCase {
   
-  private static AccessBO accessBO;
+  private final AccessBO accessBO;
 
   /**
    * Create the test case
@@ -39,20 +37,20 @@ public class ImplAccessBOTest extends TestCase {
     return new TestSuite(ImplAccessBOTest.class);
   }
 
-  // public void testInsert() {
-  // try {
-  // Access access = new Access("PR", "Prueba");
-  // accessDAO.insert(access);
-  // assertTrue(true);
-  // } catch (DataIntegrityViolationException ex) {
-  // System.out.println(ex);
-  // assertTrue(false);
-  // }
-  // }
+  public void testInsert() {
+    try {
+      Access access = new Access("PR", "Prueba");
+      accessBO.insert(access);
+      assertTrue(true);
+    } catch (DataIntegrityViolationException ex) {
+      System.out.println(ex);
+      assertTrue(false);
+    }
+  }
 
   public void testUpdate() {
     try {
-      Access access = new Access(2, "PR", "Prueba", DateTime.now(), DateTime.now(), false);;
+      Access access = (Access) accessBO.selectByIdentifier(2);
       accessBO.update(access);
       assertTrue(true);
     } catch (DataIntegrityViolationException ex) {

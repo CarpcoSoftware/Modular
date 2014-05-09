@@ -1,4 +1,4 @@
-package com.carpco.modular.dao.impl;
+package com.carpco.modular.dao.bo;
 
 import java.util.Set;
 
@@ -6,10 +6,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.joda.time.DateTime;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.carpco.modular.dao.bo.UserBO;
 import com.carpco.modular.data.model.DefaultTableModel;
 import com.carpco.modular.data.model.administration.Company;
 import com.carpco.modular.data.model.administration.Role;
@@ -22,6 +20,10 @@ import com.carpco.modular.spring.ServiceLocator;
 public class ImplUserBOTest extends TestCase {
 
   private final UserBO userBO;
+  
+  private final CompanyBO companyBO;
+  
+  private final RoleBO roleBO;
 
   /**
    * Create the test case
@@ -32,6 +34,8 @@ public class ImplUserBOTest extends TestCase {
     super(testName);
     ServiceLocator.init();
     userBO = ServiceLocator.getBean(UserBO.class);
+    companyBO = ServiceLocator.getBean(CompanyBO.class);
+    roleBO = ServiceLocator.getBean(RoleBO.class);
   }
 
   /**
@@ -41,25 +45,22 @@ public class ImplUserBOTest extends TestCase {
     return new TestSuite(ImplUserBOTest.class);
   }
 
-  // public void testInsert() {
-  // try {
-  // Company company = new Company(1, "", "", DateTime.now(), DateTime.now(), true, "");
-  // Role role = new Role(1, "SUPER", "Super user", DateTime.now(), DateTime.now(), true);
-  // User user = new User("CARP", "Prueba", "prueba", "prueba", company, role);
-  // userDAO.insert(user);
-  // assertTrue(true);
-  // } catch (UncategorizedSQLException ex) {
-  // System.out.println(ex);
-  // assertTrue(false);
-  // }
-  // }
+  public void testInsert() {
+    try {
+      Company company = (Company) companyBO.selectByIdentifier(1);
+      Role role = (Role) roleBO.selectByIdentifier(1);
+      User user = new User("CARP", "Prueba", "prueba", "prueba", company, role);
+      userBO.insert(user);
+      assertTrue(true);
+    } catch (DataIntegrityViolationException ex) {
+      System.out.println(ex);
+      assertTrue(false);
+    }
+  }
 
   public void testUpdate() {
     try {
-      Company company = new Company(1, "", "", DateTime.now(), DateTime.now(), true, "");
-      Role role = new Role(1, "SUPER", "Super user", DateTime.now(), DateTime.now(), true);
-      User user = new User("CARP", "Prueba", "prueba", "prueba", company, role);
-      user.setIdentifier(2);
+      User user = (User) userBO.selectByIdentifier(2);
       user.setEnabled(false);
       userBO.update(user);
       assertTrue(true);
