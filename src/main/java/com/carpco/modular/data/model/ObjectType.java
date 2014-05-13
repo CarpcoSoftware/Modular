@@ -6,6 +6,8 @@ package com.carpco.modular.data.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 /**
  * Object type is a model from database table.
  * 
@@ -18,6 +20,31 @@ public class ObjectType extends DefaultTableModel {
    * Object status set
    */
   private Set<ObjectStatus> objectStatusSet;
+  
+  /**
+   * {@link ObjectType} constructor with parameters code and name
+   * 
+   * @param code Code that will be used for record
+   * @param name Name that will be used for record
+   */
+  public ObjectType(String code, String name) {
+    super(code, name);
+  }
+
+  /**
+   * {@link ObjectType} constructor with all parameters
+   * 
+   * @param identifier Identifier from database
+   * @param code Code from database
+   * @param name Name from database
+   * @param dtCreation Record's creation date and time
+   * @param dtLastUpdate Record's last update date and time
+   * @param enabled Flag to identify if record is enabled or disabled
+   */
+  public ObjectType(int identifier, String code, String name, DateTime dtCreation,
+      DateTime dtLastUpdate, boolean enabled) {
+    super(identifier, code, name, dtCreation, dtLastUpdate, enabled);
+  }
 
   /**
    * @return the objectStatusSet

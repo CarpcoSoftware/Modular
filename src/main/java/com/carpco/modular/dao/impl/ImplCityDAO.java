@@ -31,6 +31,10 @@ public class ImplCityDAO extends AbstractImplDAO implements ICityDao {
   
   @Autowired
   private ImplStateDAO stateDAO;
+  
+  private void useDataSource(String datasourceName) {
+    setDataSourceName(datasourceName);
+  }
 
   /* (non-Javadoc)
    * @see com.carpco.modular.dao.IDao#select()

@@ -6,11 +6,30 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
  
- 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+ 	<bean id="parentDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" abstract="true"> 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	</bean>
+	
+	<bean id="mainDataSource" parent="parentDataSource">
 		<property name="url" value="jdbc:mysql://localhost:3306/modular" />
 		<property name="username" value="root" />
 		<property name="password" value="Mysql020486" />
+	</bean>
+	
+	<bean id="carpcoDataSource" parent="parentDataSource">
+		<property name="url" value="jdbc:mysql://localhost:3306/modular_prueba" />
+		<property name="username" value="root" />
+		<property name="password" value="Mysql020486" />
+	</bean>
+	
+	<bean id="dataSource" class="com.carpco.modular.spring.RoutingDataSource">
+	   <property name="targetDataSources">
+	      <map key-type="java.lang.String">
+	         <entry key="main" value-ref="mainDataSource"/>
+	         <entry key="carpco" value-ref="carpcoDataSource"/>
+	      </map>
+	   </property>
+	   <property name="defaultTargetDataSource" ref="mainDataSource"/>
 	</bean>
 	
 	<context:component-scan base-package="com.carpco.modular.dao" />

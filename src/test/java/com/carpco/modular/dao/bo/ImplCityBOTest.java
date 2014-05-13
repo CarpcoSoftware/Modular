@@ -42,17 +42,17 @@ public class ImplCityBOTest extends TestCase {
     return new TestSuite(ImplCityBOTest.class);
   }
 
-  public void testInsert() {
-    try {
-      State state = (State) stateBO.selectByIdentifier(2);
-      City city = new City("PR", "Prueba", state);
-      cityBO.insert(city);
-      assertTrue(true);
-    } catch (DataIntegrityViolationException ex) {
-      System.out.println(ex);
-      assertTrue(false);
-    }
-  }
+//  public void testInsert() {
+//    try {
+//      State state = (State) stateBO.selectByIdentifier(2);
+//      City city = new City("PR", "Prueba", state);
+//      cityBO.insert(city);
+//      assertTrue(true);
+//    } catch (DataIntegrityViolationException ex) {
+//      System.out.println(ex);
+//      assertTrue(false);
+//    }
+//  }
 
   public void testUpdate() {
     try {
